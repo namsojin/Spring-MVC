@@ -2,16 +2,21 @@ package com.spring.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.biz.member.MemberDAO;
+import com.spring.biz.member.MemberService;
 import com.spring.biz.member.MemberVO;
 
 @Controller
 public class MemberController {
+	
+	@Autowired  //DI주입
+	private MemberService memberService;
 	
 	//같은 기능인데 get이냐 post이냐가 다를 경우에 쓰는건 method=RequestMethod.GET 이다. 
 	@RequestMapping(value="/login.do", method=RequestMethod.GET) 
@@ -29,10 +34,10 @@ public class MemberController {
 	}
 
 	@RequestMapping(value="/login.do", method=RequestMethod.POST) 
-	public String selectOneMember(MemberVO vo,MemberDAO memberDAO,HttpSession session) {
-		System.out.println("MemberController 입장");
+	public String selectOneMember(MemberVO vo,HttpSession session) {
+		System.out.println("selectOneMember 수행");
 		
-		vo=memberDAO.selectOne(vo);
+		vo=memberService.selectOne(vo);
 	
 		if(vo==null) {
 			//로그인 실패
@@ -72,13 +77,13 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/join.do", method=RequestMethod.POST) 
-	public String insertMember(MemberVO vo,MemberDAO memberDAO) {
+	public String insertMember(MemberVO vo) {
 		System.out.println("insertMember 입장");
 		
 		
 		
 		
-		if(memberDAO.insertMember(vo)) {
+		if(memberService.insertMember(vo)) {
 			//회원가입성공
 			System.out.println("로그: 회원가입성공");
 			return "redirect:login.do";

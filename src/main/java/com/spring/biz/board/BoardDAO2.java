@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-//@Repository("boardDAO")
+@Repository("boardDAO")
 public class BoardDAO2 { // 스프링 JDBC를 활용하는 DAO
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -42,7 +42,7 @@ public class BoardDAO2 { // 스프링 JDBC를 활용하는 DAO
 	}
 
 	public List<BoardVO> selectAll(BoardVO vo) {
-		System.out.println("BoardDAO2의 selectAll()");
+		System.out.println("BoardDAO2 selectAll() 동작중");
 		return jdbcTemplate.query(SQL_SELECT_ALL, new BoardRowMapper());
 	}
 	public BoardVO selectOne(BoardVO vo) {

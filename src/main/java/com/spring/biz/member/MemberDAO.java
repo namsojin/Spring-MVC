@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.biz.common.JDBCUtil;
 
-@Repository("memberDAO")
+//@Repository("memberDAO")
 public class MemberDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;

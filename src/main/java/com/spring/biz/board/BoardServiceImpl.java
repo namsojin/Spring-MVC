@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
-	private BoardDAO boardDAO;
+	private BoardDAO2 boardDAO;
 
 	@Override
 	public boolean insertBoard(BoardVO vo) {

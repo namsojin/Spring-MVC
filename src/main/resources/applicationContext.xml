@@ -30,4 +30,43 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
  	  -->
+ 	  
+ 	 
+	<!-- Conn객체를 확보하는 것이 어떤 JDBC에서든지 중요한 포인트이다. -->
+	<!-- 스프링 JDBC에서는 Conn객체를 확보하는 역할을 담당하는 친구가 "DataSource" 이다. -->
+	<!-- 메모리에 DataSource 클래스의 객체 등록 + SQL 설정은 setter주입 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost/namdb"/>
+		<property name="username" value="root"/>
+		<property name="password" value="1234"/>
+	</bean>
+	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>	 
+	
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+    
+    <!-- 
+	<context:component-scan base-package="com.spring.controller" />
+	-->
+	<context:component-scan base-package="com.spring.biz" />
+
+	
+	
+	<!-- 
+	<aop:config>
+      <aop:pointcut expression="execution(* com.spring.biz..*Impl.*(..))" id="aPointcut"/>
+      <aop:pointcut expression="execution(* com.spring.biz..*Impl.select*(..))" id="bPointcut" />
+	
+	
+	
+	</aop:config>
+	 --> 
+	
+ 	  
+ 	  
+ 	  
+ 	  
 </beans>

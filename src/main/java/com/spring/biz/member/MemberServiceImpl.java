@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
-	private MemberDAO MemberDAO;
+	private MemberDAO2 MemberDAO;
 
 	@Override
 	public boolean insertMember(MemberVO vo) {

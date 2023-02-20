@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-//@Repository("memberDAO")
+@Repository("memberDAO")
 public class MemberDAO2 {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -39,6 +39,7 @@ public class MemberDAO2 {
 	}
 
 	public MemberVO selectOne(MemberVO vo) {
+		System.out.println("MemberDAO2의 selectOne() 동작중");
 		Object[] args= {vo.getMid(),vo.getMpw()};
 		return jdbcTemplate.queryForObject(SQL_SELECT_ONE, args, new MemberRowMapper());
 	}

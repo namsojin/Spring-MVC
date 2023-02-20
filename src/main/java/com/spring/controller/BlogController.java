@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;  //@Controller 달면 생김
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.biz.board.BoardDAO;
+import com.spring.biz.board.BoardService;
 import com.spring.biz.board.BoardVO;
 
 //@Component -->일반 new / 하위에 밑의 세 개의 어노테이션을 상속한다.
@@ -23,6 +25,11 @@ import com.spring.biz.board.BoardVO;
 public class BlogController {
 	//핸들러맵핑은 객체를 보고, 리퀘스트 맵핑은 메서드를 본다. =>리퀘스트 맵핑는 메서드들 합치는거 가능해짐. => 응집도가 높아진 것. 
 	 
+	@Autowired  //DI주입 //메모리에 있는 자료형을 보고 주입한다.->MemberService타입이 있는지 확인 how? @Service("memberService") 있는지 확인함.
+	private BoardService boardService;
+	
+	
+	
 	//검색시 조건들 전달하기위한 메서드
 	//1.메서드 호출 순서 
 	// : @RequestMapping 보다 먼저 호출된다. 
@@ -44,32 +51,32 @@ public class BlogController {
 	
 	//이 요청(/main.do)에 대해 여기로 와 
 	@RequestMapping(value="/main.do") 
-	public String selectAllBoard(BoardVO vo, BoardDAO boardDAO,Model model){
+	public String selectAllBoard(BoardVO vo, Model model){
 		System.out.println("selectAllBoard 수행");
 		//System.out.println("searchcondition: "+vo.getSearchCondition());
 		//System.out.println("searchcontent: "+vo.getSearchContent());
-		System.out.println("로그 list:"+boardDAO.selectAll(vo));
-		model.addAttribute("datas", boardDAO.selectAll(vo));
+		System.out.println("로그 list:"+boardService.selectAll(vo));
+		model.addAttribute("datas", boardService.selectAll(vo));
 		 
 		return "main.jsp";
 	}
 	
 	@RequestMapping(value="/blog.do")
-	public String selcetOneBoard(BoardVO vo,BoardDAO boardDAO,HttpSession session){ 
+	public String selcetOneBoard(BoardVO vo,HttpSession session){ 
 		//HttpServletRequest request : 사용자의 입력값이 request에 저장되어있음.
 	    //-> 사용자에게 입력값 받아와서 BoardVO에 담을 것. 그걸 vo라 부를 것. == Command 객체 
 		//Command 객체를 사용하면 자동으로 이루어지는 것: 1) new 2) request로부터 추출(사용자 입력값 추출) 3) 해당 객체(vo)에 자동으로 set 매핑해서 저장. <<-스프링컨테이너가 해줌.
 		System.out.println("selcetOneBoard 수행");
-		session.setAttribute("data", boardDAO.selectOne(vo));
+		session.setAttribute("data", boardService.selectOne(vo));
 		//model.addAttribute("data", boardDAO.selectOne(vo));
 		
 		return "blog.jsp";
 	}
 	
 	@RequestMapping(value="/write.do")
-	public String insertBoard(BoardVO vo,BoardDAO boardDAO){ 
+	public String insertBoard(BoardVO vo){ 
 		System.out.println("insertBoard 수행");
-		if(boardDAO.insertBoard(vo)) { //글추가 성공
+		if(boardService.insertBoard(vo)) { //글추가 성공
 			return "redirect:main.do";
 		}
 		else { //글추가 실패
@@ -107,10 +114,10 @@ public class BlogController {
 	
 	
 	@RequestMapping(value="/update.do", method=RequestMethod.POST)
-	public String updateBoard(BoardVO vo,BoardDAO boardDAO){ 
+	public String updateBoard(BoardVO vo){ 
 		System.out.println("updateBoard 입장");
 		
-		if(boardDAO.updateBoard(vo)) {
+		if(boardService.updateBoard(vo)) {
 			//글수정 성공
 			return "redirect:main.do";
 		}
@@ -121,10 +128,10 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/delete.do")
-	public String deleteBoard(BoardVO vo,BoardDAO boardDAO){ 
+	public String deleteBoard(BoardVO vo){ 
 		System.out.println("deleteBoard 입장");
 		
-		if(boardDAO.deleteBoard(vo)) {
+		if(boardService.deleteBoard(vo)) {
 			//글수정 성공
 			return "redirect:main.do";
 		}
