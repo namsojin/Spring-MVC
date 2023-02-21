@@ -8,6 +8,9 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
 	
+	<!-- DS-servlet.xml은 DS서블릿이 구동될때 구동이 되는 것, DS와 연관이 있는 것이다.
+		따라서, HM,VS,C 와 관련된 설정만 있다. => 현재는 C에 관한 설정만 있으면 된다.  
+	 -->
 	<context:component-scan base-package="com.spring.controller" />
 	<!-- 
 	<context:component-scan base-package="com.spring.biz" />

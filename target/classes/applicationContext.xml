@@ -51,6 +51,10 @@
     <!-- 
 	<context:component-scan base-package="com.spring.controller" />
 	-->
+	
+	<!-- DS와 관련되지 않은 POJO인 클래스의 설정만 들어있으면 된다. 
+		Service 레이어 , DAO, AOP  -> 서비스레이어 소스(biz) ,데이터관련과(JDBC템플릿) , aop설정(<aop>)만 들어있으면 된다.
+	-->
 	<context:component-scan base-package="com.spring.biz" />
 
 	
