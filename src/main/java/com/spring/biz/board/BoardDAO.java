@@ -16,7 +16,7 @@ public class BoardDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
 
-	private final String SQL_INSERT="INSERT INTO BOARD(TITLE,WRITER,CONTENT) VALUES(?,?,?)";
+	private final String SQL_INSERT="INSERT INTO BOARD(TITLE,WRITER,CONTENT,IMAGE) VALUES(?,?,?,?)";
 	private final String SQL_UPDATE="UPDATE BOARD SET TITLE=?,CONTENT=? WHERE BID=?";
 	private final String SQL_DELETE="DELETE FROM BOARD WHERE BID=?";
 
@@ -33,6 +33,7 @@ public class BoardDAO {
 			pstmt.setString(1, vo.getTitle());
 			pstmt.setString(2, vo.getWriter());
 			pstmt.setString(3, vo.getContent());
+			pstmt.setString(4, vo.getFileName());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -115,6 +116,7 @@ public class BoardDAO {
 				data.setContent(rs.getString("CONTENT"));
 				data.setTitle(rs.getString("TITLE"));
 				data.setWriter(rs.getString("WRITER"));
+				data.setFileName(rs.getString("IMAGE"));
 				datas.add(data);
 				System.out.println("data:"+data);
 			}
@@ -141,6 +143,7 @@ public class BoardDAO {
 				data.setContent(rs.getString("CONTENT"));
 				data.setTitle(rs.getString("TITLE"));
 				data.setWriter(rs.getString("WRITER"));
+				data.setFileName(rs.getString("IMAGE"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

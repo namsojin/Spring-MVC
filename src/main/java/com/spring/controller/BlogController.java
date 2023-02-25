@@ -1,5 +1,6 @@
 package com.spring.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,8 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.biz.board.BoardDAO;
 import com.spring.biz.board.BoardService;
 import com.spring.biz.board.BoardVO;
 
@@ -74,8 +75,35 @@ public class BlogController {
 	}
 	
 	@RequestMapping(value="/write.do")
-	public String insertBoard(BoardVO vo){ 
+	public String insertBoard(BoardVO vo){  //BoardVO vo에 파일입출력관련 멤버변수 만들어줘야한다.
 		System.out.println("insertBoard 수행");
+		
+		//이미지 업로드
+		MultipartFile uploadFile = vo.getUploadFile();  
+		if(!uploadFile.isEmpty()) { //이미지 업로드 되었다면,
+			System.out.println("이미지 업로드 확인");
+			String fileName = uploadFile.getOriginalFilename(); //파일이름
+			System.out.println("파일이름:"+fileName );
+			vo.setFileName(fileName);
+			
+			//사용자의 로컬PC에 저장된 이미지를 업로드한 것이기 때문에, 
+			//서버(해당 프로젝트)에서 해당 이미지를 별도 관리하기위해 데이터를 복사해서 저장해야한다. 
+			try {
+			uploadFile.transferTo(new File("D:\\NAM1005\\workspace2\\day71\\src\\main\\webapp\\images\\"+fileName));
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		else{
+			try {
+				vo.setFileName("default.jpg");
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+			
+		}
+		
 		if(boardService.insertBoard(vo)) { //글추가 성공
 			return "redirect:main.do";
 		}

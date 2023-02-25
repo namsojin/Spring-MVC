@@ -37,6 +37,10 @@ public class MemberController {
 	public String selectOneMember(MemberVO vo,HttpSession session) {
 		System.out.println("selectOneMember 수행");
 		
+		if(vo.getMid().equals("timo")) {
+	         throw new IllegalArgumentException("내가만든에러");
+	     }
+		
 		vo=memberService.selectOne(vo);
 	
 		if(vo==null) {
@@ -58,8 +62,9 @@ public class MemberController {
 	@RequestMapping(value="/logout.do") 
 	public String logoutMember(HttpSession session) {
 		System.out.println("MemberController 입장");
-		
-		session.invalidate();  //request에 있던 HttpSession session 만 가져오면 된다. 
+	    
+		session.removeAttribute("member");
+		//session.invalidate();  //request에 있던 HttpSession session 만 가져오면 된다. 
 		
 		return "main.jsp";
 	}

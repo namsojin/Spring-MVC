@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE HTML>
 <!--
 	Editorial by HTML5 UP
@@ -9,7 +10,7 @@
 -->
 <html>
 	<head>
-		<title>메인 페이지</title>
+		<title><spring:message code="message.main.title"/></title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -25,7 +26,12 @@
 
 							<!-- Header -->
 								<header id="header">
-									<a href="index.html" class="logo"><strong>Editorial</strong> by HTML5 UP</a>
+								
+									<a href="main.do?lang=en">ENGLISH</a>
+					                <a href="main.do?lang=ko">한국어</a>
+					                
+										
+					                
 									<ul class="icons">
 										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
 										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
@@ -33,6 +39,7 @@
 										<!-- 커스텀 태그 이용하기 -->
 										<c:choose>
 											<c:when test="${not empty member}">
+											
 											<li><a href="logout.do" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
 											</c:when>
 											<c:otherwise>
@@ -47,17 +54,17 @@
 									<header class="main">
 										<c:choose>
 											<c:when test="${not empty member}">
-										<h1>${member.mid}님, 환영합니다:D</h1>
+										<h1>${member.mid}<spring:message code="message.main.hello"/></h1>
 											</c:when>
 											<c:otherwise>
-											<h1>안녕하세요, 로그인을 해주세요:D</h1>
+											<h1><spring:message code="message.main.login"/></h1>
 											</c:otherwise>
 										</c:choose>
 									</header>
 
 									<span class="image main"><img src="images/pic.png" alt="귀여운 티모 이미지" /></span>
 									<hr class="major" />
-									<h2>검색 </h2>
+									<h2><spring:message code="message.main.search"/></h2>
 									<form action="main.do" method="post">
 										<select name="searchCondition">
 											<c:forEach var="v" items="${searchMap}">
@@ -65,13 +72,13 @@
 											</c:forEach>
 											
 										</select>
-										<input type="text" name="searchContent" placeholder="검색어를 입력하세요." required>
-										<input type="submit" class="button primary icon solid fa-search"  value="검색하기">
+										<input type="text" name="searchContent" placeholder="<spring:message code="message.main.searchContent"/>" required>
+										<input type="submit" class="button primary icon solid fa-search"  value="<spring:message code="message.main.btnSearch"/>">
 									</form>
 									
 									
 									<hr class="major" />
-									<h2>전체 글 목록</h2>
+									<h2><spring:message code="message.main.boardList"/></h2>
 									<ul>
 										<c:forEach var="v" items="${datas}">
 											<li><a href="blog.do?bid=${v.bid}">${v.bid}</a> | ${v.title} | ${v.writer} | ${v.content}</li>
@@ -80,12 +87,14 @@
 									
 									
 									<hr class="major" />
-									<h2>글 작성하기</h2>
-									<form action="write.do" method="post">
-										<input type="text" name="title" placeholder="제목을 입력하세요" required>
-										<input type="text" name="content" placeholder="내용을 입력하세요" required>
+									<h2><spring:message code="message.main.insertBoard"/></h2>
+									<form action="write.do" method="post" enctype="multipart/form-data">
+										<input type="text" name="title" placeholder="<spring:message code="message.main.putTitle"/>" required>
+										<input type="text" name="content" placeholder="<spring:message code="message.main.putContent"/>" required>
+										<input type="file" value="파일일"   name="uploadFile" onchange="readURL(this);">
+										<img id="preview" />
 										<input type="hidden" name="writer" value="${member.mid}" required>
-										<input type="submit" class="button primary icon solid fa-search" value="글추가하기" >
+										<input type="submit" class="button primary icon solid fa-search" value="<spring:message code="message.main.btnInsert"/>" >
 									</form>
 									
 									
@@ -212,6 +221,28 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			
+			<script type="text/javascript">
+			
+			
+			function readURL(input) {
+				
+				  let img = document.getElementById('preview');
+				  if (input.files && input.files[0]) {
+				    var reader = new FileReader();
+				    reader.onload = function(e) {
+				     img.src = e.target.result;
+				     img.width = 250;
+				     img.height = 250;
+				    };
+				    reader.readAsDataURL(input.files[0]);
+				  } else {
+				    document.getElementById('preview').src = "";
+				  }
+				}
+
+			
+			</script>
 
 	</body>
 </html>

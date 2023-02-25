@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE HTML>
 <!--
 	Editorial by HTML5 UP
@@ -8,7 +9,8 @@
 -->
 <html>
 <head>
-<title>로그인 페이지</title>
+
+<title><spring:message code="message.login.title"/></title>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -25,8 +27,8 @@
 
 				<!-- Header -->
 				<header id="header">
-					<a href="index.html" class="logo"><strong>Editorial</strong> by
-						HTML5 UP</a>
+					<a href="login.do?lang=en">ENGLISH</a>
+					<a href="login.do?lang=ko">한국어</a>
 					
 				</header>
 
@@ -34,27 +36,28 @@
 				<section id="banner">
 					<div class="content">
 						<header>
-							<h1>로그인 페이지</h1>
+							<h1><spring:message code="message.login.title"/></h1>
+						
 						</header>
 						<form method="post" action="login.do">
 							<div class="row gtr-uniform">
 								<div class="col-6 col-12-xsmall">
-									<input type="text" name="mid" placeholder="id를 입력하세요." value="${user.mid}" required />
+									<input type="text" name="mid" placeholder="<spring:message code="message.login.putId"/>" value="${user.mid}" required />
 								</div>
 								<div class="col-6 col-12-xsmall">
-									<input type="password" name="mpw" placeholder="pw를 입력하세요." value="${user.mpw}"
+									<input type="password" name="mpw" placeholder="<spring:message code="message.login.putPw"/>" value="${user.mpw}"
 										required />
 								</div>
 								<div class="col-12">
 									<ul class="actions">
-										<li><input type="submit" value="로그인" class="button big" /></li>
+										<li><input type="submit" value="<spring:message code="message.login.btnLogin"/>" class="button big" /></li>
 									</ul>
 								</div>
 							</div>
 						</form>
 						<div class="col-12">
 									<ul class="actions">
-										<li><a href="join.do" class="button big">회원가입</a></li>
+										<li><a href="join.do" class="button big"><spring:message code="message.login.btnSignUp"/></a></li>
 									</ul>
 						</div>
 						

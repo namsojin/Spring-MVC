@@ -3,7 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
@@ -12,9 +14,70 @@
 		따라서, HM,VS,C 와 관련된 설정만 있다. => 현재는 C에 관한 설정만 있으면 된다.  
 	 -->
 	<context:component-scan base-package="com.spring.controller" />
-	<!-- 
-	<context:component-scan base-package="com.spring.biz" />
+	
+	<!-- 다국어 처리 -->
+	<!-- 1) list타입의 컬렉션 멤버변수가 있다. 
+		value: message 폴더에 messageSource 파일을 관리하고 있구나
+	-->
+	   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>message.messageSource</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!--2)현재 접속지 정보 파악해줌 -->
+	 <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+	<!--3)언어설정을 변경해줄수있는 Interceptor 객체 생성 -->
+	   <mvc:interceptors>
+      		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+       			  <property name="paramName" value="lang" />
+    	  </bean>
+   </mvc:interceptors>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 이미지 업로드
+		Resolver 라고 쓰는 곳에는 id값을 다른 걸로 바꾸지않는다.
+		value= "-1" : 파일의 크기의 최대값을 주지 않겠다. 
 	 -->
+	  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+   		 <property name="maxUploadSize" value= "-1"/>
+      </bean>
+	
+	<!-- 에러페이지로 이동시켜줘(@) -->
+	<!-- 이것도 필요함.  
+	<context:component-scan base-package="com.spring.controller" />
+	 -->
+	<mvc:annotation-driven></mvc:annotation-driven> 
+	
+	 
+	 <!-- 에러페이지 설정(xml이용) -->
+	 <!-- 
+	 <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    	<property name="exceptionMappings">
+    		  <props>
+            <prop key="java.lang.ArithmeticException">error/error01.jsp</prop>
+            <prop key="java.lang.NullPointerException">error/error02.jsp</prop>
+         </props>
+    	</property>
+		<property name="defaultErrorView" value="error/error03.jsp" />
+    
+     </bean> 
+	  -->
+	 
+	 
+	 
+	 
 
 	<!-- HM 생성 -->
 	<!-- 어떤 요청에 대해 어떤 컨트롤러로 갈지 결정해줌 -->
