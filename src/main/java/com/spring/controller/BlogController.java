@@ -170,6 +170,16 @@ public class BlogController {
 	}
 	
 	
+	@RequestMapping(value="/heart.do", produces= "application/json; charset=utf-8")
+	public String heartBoard(BoardVO vo){ 
+		System.out.println("heartBoard 입장");
+		
+		
+			return "success";
+				
+	}
+	
+	
 	
 	
 	
