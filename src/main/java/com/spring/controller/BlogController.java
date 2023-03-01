@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.biz.board.BoardService;
 import com.spring.biz.board.BoardVO;
+import com.spring.biz.myLike.MylikeService;
+import com.spring.biz.myLike.MylikeVO;
 
 //@Component -->일반 new / 하위에 밑의 세 개의 어노테이션을 상속한다.
 //@Controller  --> controller 타입의 객체를 new
@@ -28,6 +30,10 @@ public class BlogController {
 	 
 	@Autowired  //DI주입 //메모리에 있는 자료형을 보고 주입한다.->MemberService타입이 있는지 확인 how? @Service("memberService") 있는지 확인함.
 	private BoardService boardService;
+	
+	@Autowired  //DI주입 //메모리에 있는 자료형을 보고 주입한다.->MemberService타입이 있는지 확인 how? @Service("memberService") 있는지 확인함.
+	private MylikeService mylikeService;
+	
 	
 	
 	
@@ -52,12 +58,14 @@ public class BlogController {
 	
 	//이 요청(/main.do)에 대해 여기로 와 
 	@RequestMapping(value="/main.do") 
-	public String selectAllBoard(BoardVO vo, Model model){
+	public String selectAllBoard(BoardVO vo, Model model, MylikeVO myvo){
 		System.out.println("selectAllBoard 수행");
 		//System.out.println("searchcondition: "+vo.getSearchCondition());
 		//System.out.println("searchcontent: "+vo.getSearchContent());
 		System.out.println("로그 list:"+boardService.selectAll(vo));
 		model.addAttribute("datas", boardService.selectAll(vo));
+		model.addAttribute("mylike",mylikeService.selectAll(myvo));
+		System.out.println("로그 mylist:"+mylikeService.selectAll(myvo));
 		 
 		return "main.jsp";
 	}

@@ -83,7 +83,8 @@
 										<c:forEach var="v" items="${datas}">
 											<li><a href="blog.do?bid=${v.bid}">${v.bid}</a> | ${v.title} | ${v.writer} | ${v.content} |
 											
-											<img id="heart" alt="하트이미지" src="" style="width:30px; height:30px; cusor:pointer;"> 
+												<img id="heart-ing" alt="좋아요상태" src="images/icon-heart2.png" style="width:30px; height:30px; cusor:pointer;"> 
+								           		
 								           </li>
 										</c:forEach>
 									</ul>
