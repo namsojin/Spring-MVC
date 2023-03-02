@@ -32,6 +32,12 @@ public class MylikeServiceImpl implements MylikeService {
 		
 		return MylikeDAO.selectAll(vo);
 	}
+
+	@Override
+	public MylikeVO selectOne(MylikeVO vo) {
+		
+		return MylikeDAO.selectOne(vo);
+	}
 	
 	
 	

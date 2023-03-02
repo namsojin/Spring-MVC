@@ -8,5 +8,6 @@ public interface MylikeService {
 	
 	public boolean deleteMylike(MylikeVO vo);
 	public List<MylikeVO> selectAll(MylikeVO vo);
+	public MylikeVO selectOne(MylikeVO vo);
 	
 }

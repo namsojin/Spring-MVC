@@ -82,9 +82,6 @@
 									<ul>
 										<c:forEach var="v" items="${datas}">
 											<li><a href="blog.do?bid=${v.bid}">${v.bid}</a> | ${v.title} | ${v.writer} | ${v.content} |
-											
-												<img id="heart-ing" alt="좋아요상태" src="images/icon-heart2.png" style="width:30px; height:30px; cusor:pointer;"> 
-								           		
 								           </li>
 										</c:forEach>
 									</ul>
@@ -137,74 +134,6 @@
 			<script src="assets/js/main.js"></script>
 			
 			
-			<!-- 하트 -->
-			<script src="https://code.jquery.com/jquery-3.6.3.min.js"
-		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
-		crossorigin="anonymous"></script>
-		
-			<script type="text/javascript">
-				$(document).ready(function(){
-					 var heartval = 0;
-					 if(heartval >0){
-						 console.log('현재 좋아요 한 상태');
-						 $(#photo).prop("src","images/icon-heart2.png");
-					 }else{
-						 console.log('현재 좋아요 안한 상태');
-						 $(#photo).prop("src","images/icon-heart1.png"); 
-						 
-					 }
-					
-				//좋아요 버튼 클릭시 
-				$(#heart).on("click",function(){
-					
-					console.log('버튼 클릭함');
-					
-					var data={
-						bid:'${v.bid}';		
-					};
-					
-					$.ajax({
-						
-						url: 'heart.do';
-						type:'POST';
-						contentType : 'application/json; charset=utf-8',
-                    	data : JSON.stringify(data),
-                    	success : function(result) {
-                            console.log(result);
-                            if (result == "success") {
-                                console.log("좋아요 성공!");
-                                location.reload();
-                            }
-                       
-					 },
-					 error : function(e) {
-	                        console.log(e);
-	                        alert('찜할 수 없습니다.');
-	                        location.reload(); // 실패시 새로고침하기	
-					 });
-
-				})
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-				})
-		
-		
-		
-		
-		
-		
-		
-		</script>
 			
 			
 			

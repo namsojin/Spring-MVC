@@ -12,10 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.biz.board.BoardService;
 import com.spring.biz.board.BoardVO;
+import com.spring.biz.member.MemberVO;
 import com.spring.biz.myLike.MylikeService;
 import com.spring.biz.myLike.MylikeVO;
 
@@ -64,20 +66,26 @@ public class BlogController {
 		//System.out.println("searchcontent: "+vo.getSearchContent());
 		System.out.println("로그 list:"+boardService.selectAll(vo));
 		model.addAttribute("datas", boardService.selectAll(vo));
-		model.addAttribute("mylike",mylikeService.selectAll(myvo));
-		System.out.println("로그 mylist:"+mylikeService.selectAll(myvo));
+		
 		 
 		return "main.jsp";
 	}
 	
 	@RequestMapping(value="/blog.do")
-	public String selcetOneBoard(BoardVO vo,HttpSession session){ 
+	public String selcetOneBoard(BoardVO vo,HttpSession session,MylikeVO myvo,Model model){ 
 		//HttpServletRequest request : 사용자의 입력값이 request에 저장되어있음.
 	    //-> 사용자에게 입력값 받아와서 BoardVO에 담을 것. 그걸 vo라 부를 것. == Command 객체 
 		//Command 객체를 사용하면 자동으로 이루어지는 것: 1) new 2) request로부터 추출(사용자 입력값 추출) 3) 해당 객체(vo)에 자동으로 set 매핑해서 저장. <<-스프링컨테이너가 해줌.
 		System.out.println("selcetOneBoard 수행");
 		session.setAttribute("data", boardService.selectOne(vo));
 		//model.addAttribute("data", boardDAO.selectOne(vo));
+		myvo.setBid(vo.getBid());
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		myvo.setMid(member.getMid());
+		
+		model.addAttribute("isMylike",mylikeService.selectOne(myvo) );
+		System.out.println("isMylike:"+mylikeService.selectOne(myvo));
+		
 		
 		return "blog.jsp";
 	}
@@ -177,13 +185,20 @@ public class BlogController {
 		}		
 	}
 	
-	
-	@RequestMapping(value="/heart.do", produces= "application/json; charset=utf-8")
-	public String heartBoard(BoardVO vo){ 
+	@ResponseBody
+	@RequestMapping(value="/heart.do",method=RequestMethod.POST, produces="application/json; charset=utf-8")
+	public String heartBoard(MylikeVO vo){ 
 		System.out.println("heartBoard 입장");
-		
-		
-			return "success";
+		    
+		  if(mylikeService.insertMylike(vo)) {
+			  return "success";
+			  
+		  }
+		  else {
+			  return "fail";
+			  
+		  }
+			
 				
 	}
 	
