@@ -21,7 +21,7 @@ public class MylikeDAO2 {
 	
 	private final String SQL_INSERT="INSERT INTO MYLIKE(MID,BID) VALUES(?,?)";
 	private final String SQL_DELETE="DELETE FROM MYLIKE WHERE MYNUM=?";
-	private final String SQL_SELECT_ALL="SELECT * FROM MYLIKE";
+	private final String SQL_SELECT_ALL="SELECT * FROM MYLIKE WHERE MID=?;";
 	private final String SQL_SELECT_ONE="SELECT * FROM MYLIKE WHERE BID=? AND MID=? ";
 	
 	public boolean insertMylike(MylikeVO vo) {
@@ -38,8 +38,8 @@ public class MylikeDAO2 {
 	}
 	
 	public List<MylikeVO> selectAll(MylikeVO vo) {
-		
-		return jdbcTemplate.query(SQL_SELECT_ALL, new MylikeRowMapper());
+		Object[] args= {vo.getMid()};
+		return jdbcTemplate.query(SQL_SELECT_ALL,args, new MylikeRowMapper());
 	}
 	
 	public MylikeVO selectOne(MylikeVO vo) {

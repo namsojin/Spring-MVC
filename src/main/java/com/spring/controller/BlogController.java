@@ -4,12 +4,15 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;  //@Controller 달면 생김
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +28,7 @@ import com.spring.biz.myLike.MylikeVO;
 //@Controller  --> controller 타입의 객체를 new
 //@Service
 //@Repository
+
 
 @Controller  //컨트롤러이다. new <bean> + implements 
 public class BlogController {
@@ -60,14 +64,17 @@ public class BlogController {
 	
 	//이 요청(/main.do)에 대해 여기로 와 
 	@RequestMapping(value="/main.do") 
-	public String selectAllBoard(BoardVO vo, Model model, MylikeVO myvo){
-		System.out.println("selectAllBoard 수행");
+	public String selectAllBoard(BoardVO vo, Model model, MylikeVO myvo,HttpSession session){
+		System.out.println("main.do 수행");
 		//System.out.println("searchcondition: "+vo.getSearchCondition());
 		//System.out.println("searchcontent: "+vo.getSearchContent());
-		System.out.println("로그 list:"+boardService.selectAll(vo));
-		model.addAttribute("datas", boardService.selectAll(vo));
 		
-		 
+		model.addAttribute("datas", boardService.selectAll(vo));
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		if(member !=null) {
+			myvo.setMid(member.getMid());	
+			model.addAttribute("mylikeList", mylikeService.selectAll(myvo));
+		}
 		return "main.jsp";
 	}
 	
@@ -79,14 +86,15 @@ public class BlogController {
 		System.out.println("selcetOneBoard 수행");
 		session.setAttribute("data", boardService.selectOne(vo));
 		//model.addAttribute("data", boardDAO.selectOne(vo));
-		myvo.setBid(vo.getBid());
 		MemberVO member = (MemberVO)session.getAttribute("member");
-		myvo.setMid(member.getMid());
-		
+		if(member != null) {
+			myvo.setBid(vo.getBid());
+			myvo.setMid(member.getMid());
+			
+			
+		}
 		model.addAttribute("isMylike",mylikeService.selectOne(myvo) );
 		System.out.println("isMylike:"+mylikeService.selectOne(myvo));
-		
-		
 		return "blog.jsp";
 	}
 	
@@ -185,23 +193,58 @@ public class BlogController {
 		}		
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/heart.do",method=RequestMethod.POST, produces="application/json; charset=utf-8")
-	public String heartBoard(MylikeVO vo){ 
+	
+	@RequestMapping(value="/heart.do",method=RequestMethod.POST)
+	public @ResponseBody String heartBoard(@RequestBody MylikeVO vo){ 
 		System.out.println("heartBoard 입장");
-		    
-		  if(mylikeService.insertMylike(vo)) {
-			  return "success";
-			  
-		  }
-		  else {
-			  return "fail";
-			  
-		  }
-			
-				
+	
+		System.out.println("vo:"+vo);
+		
+	if(mylikeService.insertMylike(vo)) {
+		System.out.println("저장됨");
+		return "success";
+		}
+		else {
+			System.out.println("저장안됨");
+			return "s";
+		}
+	
+		
 	}
 	
+	
+	
+	@RequestMapping(value="/heartNo.do",method=RequestMethod.POST)
+	public @ResponseBody String heartNoBoard(@RequestBody MylikeVO vo){ 
+		System.out.println("heartNoBoard 입장");
+	
+		System.out.println("vo:"+vo);
+		
+	if(mylikeService.deleteMylike(vo)) {
+		System.out.println("삭제됨");
+		return "success";
+		}
+		else {
+			System.out.println("삭제안됨");
+			return "s";
+		}
+	
+		
+	}
+	
+	@RequestMapping(value="/delheart.do")
+	public String deleteHeart(MylikeVO vo){ 
+		System.out.println("deleteHeart 입장");
+		
+		if(mylikeService.deleteMylike(vo)) {
+			//글수정 성공
+			return "redirect:main.do";
+		}
+		else {
+			//글추가 실패
+			return "main.jsp";
+		}		
+	}
 	
 	
 	

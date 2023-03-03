@@ -35,7 +35,7 @@
 									<ul class="icons">
 										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
 										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+										<li></li>
 										<!-- 커스텀 태그 이용하기 -->
 										<c:choose>
 											<c:when test="${not empty member}">
@@ -63,6 +63,7 @@
 									</header>
 
 									<span class="image main"><img src="images/pic.png" alt="귀여운 티모 이미지" /></span>
+									<!-- 글검색 -->
 									<hr class="major" />
 									<h2><spring:message code="message.main.search"/></h2>
 									<form action="main.do" method="post">
@@ -86,25 +87,43 @@
 										</c:forEach>
 									</ul>
 									
-									
+									<!-- 글추가 -->
 									<hr class="major" />
-									<h2><spring:message code="message.main.insertBoard"/></h2>
-									<form action="write.do" method="post" enctype="multipart/form-data">
-										<input type="text" name="title" placeholder="<spring:message code="message.main.putTitle"/>" required>
-										<input type="text" name="content" placeholder="<spring:message code="message.main.putContent"/>" required>
-										<input type="file" value="파일일"   name="uploadFile" onchange="readURL(this);">
-										<img id="preview" />
-										<input type="hidden" name="writer" value="${member.mid}" required>
-										<input type="submit" class="button primary icon solid fa-search" value="<spring:message code="message.main.btnInsert"/>" >
-									</form>
-									
-									
+									<h2>
+									<spring:message code="message.main.insertBoard" />
+									</h2>
+									<c:choose>
+										<c:when test="${not empty member}">
+											<form action="write.do" method="post" enctype="multipart/form-data">
+											<input type="text" name="title" placeholder="<spring:message code="message.main.putTitle"/>"required> 
+											<input type="text" name="content" placeholder="<spring:message code="message.main.putContent"/>" required> 
+											<input type="file" value="파일일" name="uploadFile" onchange="readURL(this);"> 
+											<img id="preview" /> 
+											<input type="hidden" name="writer" value="${member.mid}" required> 
+											<input type="submit"class="button primary icon solid fa-search" value="<spring:message code="message.main.btnInsert"/>">
+							                </form>
+						               </c:when>
+						               <c:otherwise>
+						               <h4>로그인 후 이용 가능합니다.</h4>
+						               </c:otherwise>
+					                </c:choose>
+
+					                <!-- 좋아요 목록 -->
 									<hr class="major" />
-
-									<h2>Interdum sed dapibus</h2>
-									<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
-
+									<h2>좋아요 목록</h2>
+									<c:choose>
+										<c:when test="${not empty member}">
+											<ul>
+												<c:forEach var="v" items="${mylikeList}">
+													<li><a href="blog.do?bid=${v.bid}">${v.bid}</a> | ${v.mynum} |<a href="delheart.do?mynum=${v.mynum }" class="icon brands fa-snapchat-ghost"></a>
+								           			</li>
+												</c:forEach>
+											</ul>
+										</c:when>
+										<c:otherwise>
+											 <h4>로그인 후 이용 가능합니다.</h4>
+										</c:otherwise>
+									</c:choose>
 									<hr class="major" />
 
 									<h2>Magna etiam veroeros</h2>
@@ -158,6 +177,13 @@
 
 			
 			</script>
+			
+			
+			<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+				integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+				crossorigin="anonymous">
+			</script>
+
 
 	</body>
 </html>

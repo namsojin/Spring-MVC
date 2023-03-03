@@ -20,6 +20,10 @@ public class BoardDAO2 { // 스프링 JDBC를 활용하는 DAO
 
 	private final String SQL_SELECT_ALL="SELECT * FROM BOARD";
 	private final String SQL_SELECT_ONE="SELECT * FROM BOARD WHERE BID=?";
+	
+	private final String SQL_SELECT_TITLE="SELECT * FROM BOARD WHERE TITLE LIKE CONCAT('%',?,'%') ORDER BY BID DESC";
+	private final String SQL_SELECT_CONTENT="SELECT * FROM BOARD WHERE CONTENT LIKE CONCAT('%',?,'%') ORDER BY BID DESC";
+	private final String SQL_SELECT_WRITER="SELECT * FROM BOARD WHERE WRITER LIKE CONCAT('%',?,'%') ORDER BY BID DESC";
 
 	public boolean insertBoard(BoardVO vo) {
 		System.out.println("BoardDAO2의 insert()");
@@ -43,8 +47,43 @@ public class BoardDAO2 { // 스프링 JDBC를 활용하는 DAO
 
 	public List<BoardVO> selectAll(BoardVO vo) {
 		System.out.println("BoardDAO2 selectAll() 동작중");
-		return jdbcTemplate.query(SQL_SELECT_ALL, new BoardRowMapper());
+		
+		if(vo.getSearchCondition() == null) {
+			System.out.println("전체목록출력");
+			return jdbcTemplate.query(SQL_SELECT_ALL, new BoardRowMapper());
+		}
+	 if(vo.getSearchCondition().equals("TITLE")) {
+			System.out.println("제목목록출력");
+			System.out.println("단어:"+vo.getSearchContent());
+			Object[] args= {vo.getSearchContent() };
+			return jdbcTemplate.query(SQL_SELECT_TITLE,args,new BoardRowMapper());
+		}
+		else if(vo.getSearchCondition().equals("WRITER")) {
+			System.out.println("작가목록출력");
+			Object[] args= { vo.getSearchContent() };
+			return jdbcTemplate.query(SQL_SELECT_WRITER,args,new BoardRowMapper());
+		}
+		else if(vo.getSearchCondition().equals("CONTENT")) {
+			System.out.println("내용목록출력");
+			Object[] args= { vo.getSearchContent() };
+			return jdbcTemplate.query(SQL_SELECT_CONTENT,args,new BoardRowMapper());
+		}
+		else {
+			System.out.println("전체목록출력");
+			return jdbcTemplate.query(SQL_SELECT_ALL, new BoardRowMapper());
+			
+		}
+			
 	}
+		
+		
+		
+	
+	
+	
+	
+	
+	
 	public BoardVO selectOne(BoardVO vo) {
 		Object[] args= { vo.getBid() };
 		return jdbcTemplate.queryForObject(SQL_SELECT_ONE, args, new BoardRowMapper());

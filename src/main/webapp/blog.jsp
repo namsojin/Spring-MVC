@@ -90,44 +90,119 @@
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
 	
-	<script src="https://code.jquery.com/jquery-3.6.3.min.js">
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+		crossorigin="anonymous">
 	</script>
 	
-	
-	<!-- 좋아요 추가 JS -->
-	
+	<!-- 좋아요 버튼 JS -->
 	<script type="text/javascript">
 	$(document).ready(function(){
 		
+		//좋아요 추가 JS
 		$("#heartNot").on("click",function(){
-			console.log('버튼 클릭함');
 			
-			var data={
-					bid:'${data.bid}',	
-					mid:'${member.mid}'
-				};
+			//로그인을 안 한 상태였을 시
+			if ("${member.mid}" == "") {
+                if (confirm("로그인 한 회원만 이용가능합니다. 로그인 하시겠습니까?")) {
+                    // 승낙하면 로그인 페이지로 이동
+                    location.href = '${pageContext.request.contextPath}/login.do';
+                } else {
+                    // 거부하면 해당 페이지 새로고침
+                    location.reload();
+                }
+            // 로그인 상태시 찜하기 버튼을 누르면    
+            } else {
 			
+			var bid = '${data.bid}';
+			var mid = '${member.mid}';
+			console.log('bid:'+bid+"/mid:"+mid);
+			
+			var data = {
+				bid : bid,	
+				mid : mid	
+			};
+	
 			$.ajax({
 				
-				url: 'heart.do',
+				url: '${pageContext.request.contextPath}/heart.do',
 				type:'POST',
 				contentType : 'application/json; charset=utf-8',
-	        	data : JSON.stringify(data),
-	        	success : function(result) {
-	                console.log(result);
-	                if (result == "success") {
+	        	data :JSON.stringify(data),
+	        	success : function(resp) {
+	                if (resp == 'success') {
 	                    console.log("좋아요 성공!");
+	                    if (confirm("해당 상품을 찜하셨습니다. 찜목록 페이지로 이동하시겠습니까?")) {
+                            // 승낙하면 마이페이지의 찜하기 리스트로 이동
+                            location.href = '${pageContext.request.contextPath}/main.do';
+                        } else {
+                            // 거부하면 해당 페이지 새로고침하여 찜한거 반영되게하기(HTTP의 속성 때문)
+                            location.reload();
+                        }
+	                }
+	                else{
+	                	console.log('좋아요 실패!');
+	                	alert('좋아요 할 수 없습니다.관리자에게 문의 해주세요.');
+	                	location.reload();
 	                }
 	           
 			 	},
 				 error : function(e) {
+					console.log('오류발생')
 	                console.log(e);
-	                alert('찜할 수 없습니다.');
+	                alert('좋아요 할 수 없습니다.관리자에게 문의 해주세요.');
+	                location.reload(); // 실패시 새로고침하기	
+				 }
+			});
+		  
+            }	
+		});
+		
+		//좋아요 취소 JS
+		$("#heartIng").on("click",function(){
+			console.log('취소할거니');
+		   
+			var mynum='${isMylike.mynum}';
+			console.log('isMylike.mynum:'+mynum);
+			
+			var data = {
+				mynum : mynum
+			};
+	
+			$.ajax({
+				
+				url: '${pageContext.request.contextPath}/heartNo.do',
+				type:'POST',
+				contentType : 'application/json; charset=utf-8',
+	        	data :JSON.stringify(data),
+	        	success : function(resp) {
+	                if (resp == 'success') {
+	                    console.log("취소 성공!");
+	                    alert('좋아요 취소 하셨습니다.');
+	                    location.reload();
+	                }
+	                else{
+	                	console.log('좋아요 실패!');
+	                	alert('좋아요 취소를 할 수 없습니다.관리자에게 문의 해주세요.');
+	                	location.reload();
+	                }
+	           
+			 	},
+				 error : function(e) {
+					console.log('오류발생')
+	                console.log(e);
+					alert('찜 취소를 할 수 없습니다.관리자에게 문의 해주세요.');
 	                location.reload(); // 실패시 새로고침하기	
 				 }
 			});
 			
 		});
+		
+		
+		
+		
+		
+		
 		
 		
 		

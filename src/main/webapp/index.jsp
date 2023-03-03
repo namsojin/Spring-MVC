@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <% 
 
-	response.sendRedirect("login.do");
+	response.sendRedirect("main.do");
 
 %>
 
