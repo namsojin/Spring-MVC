@@ -75,6 +75,7 @@ public class BlogController {
 			myvo.setMid(member.getMid());	
 			model.addAttribute("mylikeList", mylikeService.selectAll(myvo));
 		}
+		
 		return "main.jsp";
 	}
 	

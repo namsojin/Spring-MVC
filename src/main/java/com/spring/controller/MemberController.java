@@ -1,5 +1,6 @@
 package com.spring.controller;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +104,23 @@ public class MemberController {
 		
 	}
 	
+	
+	@RequestMapping(value="/kakaoLogin.do") 
+	public String kakaoMember(MemberVO vo,String kakao, HttpSession session) {
+		System.out.println("kakaoMember 수행");
+		System.out.println("kakao있니?"+kakao);
+		System.out.println("id:"+vo.getMid()+"/name:"+vo.getMname());
+		vo.setMpw("카카오미입력");
+		vo.setRole("MEMBER");
+		
+		if(memberService.selectOne(vo) == null) {  //처음 카카오로그인한 계정이라면, 회원가입
+			memberService.insertMember(vo);
+		}
+		
+		session.setAttribute("kakao", kakao);
+		session.setAttribute("member", vo);
+		return "redirect:main.do";	
+	}
 	
 	
 	

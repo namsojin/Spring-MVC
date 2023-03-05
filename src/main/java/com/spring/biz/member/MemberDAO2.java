@@ -13,14 +13,15 @@ public class MemberDAO2 {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private final String SQL_INSERT="INSERT INTO MEMBER VALUES(?,?,?,?)";
+	private final String SQL_INSERT="INSERT INTO MEMBER(MID,MPW,MNAME) VALUES(?,?,?)";
 	private final String SQL_UPDATE="UPDATE MEMBER SET MPW=? WHERE MID=?";
 	private final String SQL_DELETE="DELETE FROM MEMBER WHERE MID=?";
 
 	private final String SQL_SELECT_ONE="SELECT * FROM MEMBER WHERE MID=? AND MPW=?";
+	private final String SQL_SELECT_KAKAO="SELECT * FROM MEMBER WHERE MID=?";
 
 	public boolean insertMember(MemberVO vo) {
-		jdbcTemplate.update(SQL_INSERT,vo.getMid(),vo.getMpw(),vo.getMname(),vo.getRole());
+		jdbcTemplate.update(SQL_INSERT,vo.getMid(),vo.getMpw(),vo.getMname());
 		return true;
 	}
 	public boolean updateMember(MemberVO vo) {
@@ -40,8 +41,24 @@ public class MemberDAO2 {
 
 	public MemberVO selectOne(MemberVO vo) {
 		System.out.println("MemberDAO2의 selectOne() 동작중");
+		if(vo.getMpw().equals("카카오미입력")) {
+			System.out.println("카카오로그인중");
+			Object[] args= {vo.getMid()};
+			try {
+			return jdbcTemplate.queryForObject(SQL_SELECT_KAKAO, args, new MemberRowMapper());
+			}catch(Exception e) {
+				return null;
+			}
+		}
+		else {
+			System.out.println("그냥로그인중");
 		Object[] args= {vo.getMid(),vo.getMpw()};
+		try {
 		return jdbcTemplate.queryForObject(SQL_SELECT_ONE, args, new MemberRowMapper());
+		}catch(Exception e) {
+			return null;
+		}
+		}
 	}
 }
 
@@ -53,7 +70,7 @@ class MemberRowMapper implements RowMapper<MemberVO> {
 		data.setMid(rs.getString("MID"));
 		data.setMname(rs.getString("MNAME"));
 		data.setMpw(rs.getString("MPW"));
-		data.setRole(rs.getString("ROLE"));
+		//data.setRole(rs.getString("ROLE"));
 		return data;
 	}
 	

@@ -11,13 +11,15 @@
 
 	
 	<!-- DS-servlet.xml은 DS서블릿이 구동될때 구동이 되는 것, DS와 연관이 있는 것이다.
-		따라서, HM,VS,C 와 관련된 설정만 있다. => 현재는 C에 관한 설정만 있으면 된다.  
+		따라서, HM,VS,C 와 관련된 설정만 있다. => 현재는 C에 관한 설정만 있으면 된다. 
+		기존에 사용되던 어노테이션 관련 설정  
 	 -->
 	<context:component-scan base-package="com.spring.controller" />
 	
 	<!-- 다국어 처리 -->
-	<!-- 1) list타입의 컬렉션 멤버변수가 있다. 
-		value: message 폴더에 messageSource 파일을 관리하고 있구나
+	<!-- 1) 메세지 파일을 읽어오는 클래스 
+	    list타입의 컬렉션 멤버변수가 있다. 
+		value태그: message 폴더에 messageSource 파일들을 관리하고 있다
 	-->
 	   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
@@ -29,6 +31,8 @@
 	
 	<!--2)현재 접속지 정보 파악해줌 -->
 	 <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
+	
+	
 	<!--3)언어설정을 변경해줄수있는 Interceptor 객체 생성 -->
 	   <mvc:interceptors>
       		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">

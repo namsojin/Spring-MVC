@@ -53,8 +53,11 @@
 								<section>
 									<header class="main">
 										<c:choose>
-											<c:when test="${not empty member}">
-										<h1>${member.mid}<spring:message code="message.main.hello"/></h1>
+											<c:when test="${not empty member && not empty kakao}">
+										<h1>${member.mname}<spring:message code="message.main.hello"/></h1>
+											</c:when>
+											<c:when test="${not empty member }">
+											<h1>${member.mid}<spring:message code="message.main.hello"/></h1>
 											</c:when>
 											<c:otherwise>
 											<h1><spring:message code="message.main.login"/></h1>

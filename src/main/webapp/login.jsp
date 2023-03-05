@@ -2,11 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE HTML>
-<!--
-	Editorial by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
 <head>
 
@@ -55,234 +51,26 @@
 								</div>
 							</div>
 						</form>
+						<!-- 회원가입 -->					
 						<div class="col-12">
 									<ul class="actions">
 										<li><a href="join.do" class="button big"><spring:message code="message.login.btnSignUp"/></a></li>
 									</ul>
 						</div>
-						
+						<!-- 카카오 로그인 -->
+						 <a id="kakao-login-btn" href="javascript:kakaoLogin()"> 
+     							 <center><img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
+        									 width="222" alt="카카오 로그인 버튼" /></center>
+      					</a>
+      					<!-- 카카오 로그아웃 -->
+      					<a href="javascript:kakaoDelete()" style="text-decoration: none;"> 
+            							<center><span style="color: black;">카카오회원탈퇴</span></center>
+         				</a>
 					</div>
 					<span class="image object"> <img src="images/yumi.jpg"
 						alt="유미 이미지" />
 					</span>
 				</section>
-
-				<!-- Section -->
-				<section>
-					<header class="major">
-						<h2>Erat lacinia</h2>
-					</header>
-					<div class="features">
-						<article>
-							<span class="icon fa-gem"></span>
-							<div class="content">
-								<h3>Portitor ullamcorper</h3>
-								<p>Aenean ornare velit lacus, ac varius enim lorem
-									ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-									nulla amet lorem feugiat tempus aliquam.</p>
-							</div>
-						</article>
-						<article>
-							<span class="icon solid fa-paper-plane"></span>
-							<div class="content">
-								<h3>Sapien veroeros</h3>
-								<p>Aenean ornare velit lacus, ac varius enim lorem
-									ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-									nulla amet lorem feugiat tempus aliquam.</p>
-							</div>
-						</article>
-						<article>
-							<span class="icon solid fa-rocket"></span>
-							<div class="content">
-								<h3>Quam lorem ipsum</h3>
-								<p>Aenean ornare velit lacus, ac varius enim lorem
-									ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-									nulla amet lorem feugiat tempus aliquam.</p>
-							</div>
-						</article>
-						<article>
-							<span class="icon solid fa-signal"></span>
-							<div class="content">
-								<h3>Sed magna finibus</h3>
-								<p>Aenean ornare velit lacus, ac varius enim lorem
-									ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-									nulla amet lorem feugiat tempus aliquam.</p>
-							</div>
-						</article>
-					</div>
-				</section>
-
-				<!-- Section -->
-				<section>
-					<header class="major">
-						<h2>Ipsum sed dolor</h2>
-					</header>
-					<div class="posts">
-						<article>
-							<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
-							<h3>Interdum aenean</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-								nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
-							<h3>Nulla amet dolore</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-								nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
-							<h3>Tempus ullamcorper</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-								nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
-							<h3>Sed etiam facilis</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-								nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
-							<h3>Feugiat lorem aenean</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-								nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic06.jpg" alt="" /></a>
-							<h3>Amet varius aliquam</h3>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed
-								nulla amet lorem feugiat tempus aliquam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</article>
-					</div>
-				</section>
-
-			</div>
-		</div>
-
-		<!-- Sidebar -->
-		<div id="sidebar">
-			<div class="inner">
-
-				<!-- Search -->
-				<section id="search" class="alt">
-					<form method="post" action="#">
-						<input type="text" name="query" id="query" placeholder="Search" />
-					</form>
-				</section>
-
-				<!-- Menu -->
-				<nav id="menu">
-					<header class="major">
-						<h2>Menu</h2>
-					</header>
-					<ul>
-						<li><a href="index.html">Homepage</a></li>
-						<li><a href="generic.html">Generic</a></li>
-						<li><a href="elements.html">Elements</a></li>
-						<li><span class="opener">Submenu</span>
-							<ul>
-								<li><a href="#">Lorem Dolor</a></li>
-								<li><a href="#">Ipsum Adipiscing</a></li>
-								<li><a href="#">Tempus Magna</a></li>
-								<li><a href="#">Feugiat Veroeros</a></li>
-							</ul></li>
-						<li><a href="#">Etiam Dolore</a></li>
-						<li><a href="#">Adipiscing</a></li>
-						<li><span class="opener">Another Submenu</span>
-							<ul>
-								<li><a href="#">Lorem Dolor</a></li>
-								<li><a href="#">Ipsum Adipiscing</a></li>
-								<li><a href="#">Tempus Magna</a></li>
-								<li><a href="#">Feugiat Veroeros</a></li>
-							</ul></li>
-						<li><a href="#">Maximus Erat</a></li>
-						<li><a href="#">Sapien Mauris</a></li>
-						<li><a href="#">Amet Lacinia</a></li>
-					</ul>
-				</nav>
-
-				<!-- Section -->
-				<section>
-					<header class="major">
-						<h2>Ante interdum</h2>
-					</header>
-					<div class="mini-posts">
-						<article>
-							<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore aliquam.</p>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore aliquam.</p>
-						</article>
-						<article>
-							<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-							<p>Aenean ornare velit lacus, ac varius enim lorem
-								ullamcorper dolore aliquam.</p>
-						</article>
-					</div>
-					<ul class="actions">
-						<li><a href="#" class="button">More</a></li>
-					</ul>
-				</section>
-
-				<!-- Section -->
-				<section>
-					<header class="major">
-						<h2>Get in touch</h2>
-					</header>
-					<p>Sed varius enim lorem ullamcorper dolore aliquam aenean
-						ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin
-						sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat
-						tempus aliquam.</p>
-					<ul class="contact">
-						<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>
-						<li class="icon solid fa-phone">(000) 000-0000</li>
-						<li class="icon solid fa-home">1234 Somewhere Road #8254<br />
-							Nashville, TN 00000-0000
-						</li>
-					</ul>
-				</section>
-
-				<!-- Footer -->
-				<footer id="footer">
-					<p class="copyright">
-						&copy; Untitled. All rights reserved. Demo Images: <a
-							href="https://unsplash.com">Unsplash</a>. Design: <a
-							href="https://html5up.net">HTML5 UP</a>.
-					</p>
-				</footer>
-
-			</div>
-		</div>
-
 	</div>
 
 	<!-- Scripts -->
@@ -291,6 +79,84 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
+	
+	<!-- 카카오 스크립트 -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    
+    <!-- 카카오 로그인 JS -->
+    <script>
+                 // SDK를 초기화 합니다. 사용할 앱 키(javascript 키) 입력합니다.
+            	  window.Kakao.init('3d08dd963da5d6d0d9d5aed059ea3d21');
+                  // SDK 초기화 여부를 판단합니다. true가 나온다면 정상 작동
+                  console.log(Kakao.isInitialized());
+                 
+                   // 카카오 로그인 함수 생성
+                    function kakaoLogin() {
+                      window.Kakao.Auth.loginForm({
+                        scope: 'profile_nickname, account_email', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
+                        success: function (authObj) {
+                          // console.log(authObj); // 로그인 성공하면 받아오는 데이터
+                          
+                          
+                          window.Kakao.API.request({
+                            // 사용자 정보 가져오기
+                      		url: '/v2/user/me',
+                         	//url: '/v1/user/unlink',
+                           // 연결 끊기(회원탈퇴)
+                             
+                      	    // 로그인 성공시 받아올 데이터 
+                            success: (response) => {
+                              
+                         	// var accessToken = Kakao.Auth.getAccessToken(); // 엑세스 토큰 할당
+                         	// Kakao.Auth.setAccessToken(accessToken);	// 엑세스 토큰 사용하게 등록
+							
+                         	 //this.kakaoLogin.setToken(e.data['access_token']);
+                         	  
+                         	  const id = response.id;  // 로그인 성공한 유저 고유 id 발급됨
+                         	  const properties = response.properties;
+                              const name = properties.nickname;
+                              const email = response['kakao_account']['email'];
+                              console.log('email:'+email);
+                              console.log('id:'+id);
+                              
+                          	location.href="kakaoLogin.do?mname=" + name + "&mid=" + id+"&kakao=kakao"; //리다이렉트 주소
+                            },
+                          });
+                        },
+                        fail: function (error) {
+                          console.log(error);	// 실패하면 콘솔에 error 메세지
+                        },
+                      });
+                    }
+                   
+                    /*카카오 연결 끊기*/
+                    function kakaoDelete() { //  탈퇴 버튼 클릭시 실행될 함수
+                       if (Kakao.Auth.getAccessToken()) {
+                          console.log(Kakao.Auth.getAccessToken())
+                          Kakao.API.request({
+                             url : '/v1/user/unlink', // --> 탈퇴시 url
+                             success : function(response) {
+                                console.log(response)
+                                alert("탈퇴완료.");
+                             },
+                             fail : function(error) {
+                                console.log(error)
+                             },
+                          })
+                          Kakao.Auth.setAccessToken(undefined)
+                       }
+                    }
+                    /*  회원탈퇴 end */
+                   
+                   
+                  </script>
+                  
+                  
+    
+     
+	
+	
+	
 
 </body>
 </html>
