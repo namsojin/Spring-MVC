@@ -13,7 +13,7 @@ public class MemberDAO2 {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private final String SQL_INSERT="INSERT INTO MEMBER(MID,MPW,MNAME) VALUES(?,?,?)";
+	private final String SQL_INSERT="INSERT INTO MEMBER(MID,MPW,MNAME,ROLE) VALUES(?,?,?,?)";
 	private final String SQL_UPDATE="UPDATE MEMBER SET MPW=? WHERE MID=?";
 	private final String SQL_DELETE="DELETE FROM MEMBER WHERE MID=?";
 
@@ -21,7 +21,7 @@ public class MemberDAO2 {
 	private final String SQL_SELECT_KAKAO="SELECT * FROM MEMBER WHERE MID=?";
 
 	public boolean insertMember(MemberVO vo) {
-		jdbcTemplate.update(SQL_INSERT,vo.getMid(),vo.getMpw(),vo.getMname());
+		jdbcTemplate.update(SQL_INSERT,vo.getMid(),vo.getMpw(),vo.getMname(),"MEMBER");
 		return true;
 	}
 	public boolean updateMember(MemberVO vo) {
@@ -66,11 +66,13 @@ class MemberRowMapper implements RowMapper<MemberVO> {
 
 	@Override
 	public MemberVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+		System.out.println("맴퍼 들어왔니");
 		MemberVO data=new MemberVO();
 		data.setMid(rs.getString("MID"));
 		data.setMname(rs.getString("MNAME"));
 		data.setMpw(rs.getString("MPW"));
-		//data.setRole(rs.getString("ROLE"));
+		data.setRole(rs.getString("ROLE"));
+		System.out.println("data:"+data);
 		return data;
 	}
 	

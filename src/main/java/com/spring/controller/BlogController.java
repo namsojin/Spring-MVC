@@ -79,6 +79,7 @@ public class BlogController {
 		return "main.jsp";
 	}
 	
+
 	@RequestMapping(value="/blog.do")
 	public String selcetOneBoard(BoardVO vo,HttpSession session,MylikeVO myvo,Model model){ 
 		//HttpServletRequest request : 사용자의 입력값이 request에 저장되어있음.
@@ -152,6 +153,8 @@ public class BlogController {
 		}
 	   */
 	
+
+	
 	
 	@RequestMapping(value="/update.do", method=RequestMethod.GET) 
 	public String updateView() {
@@ -180,6 +183,11 @@ public class BlogController {
 		}		
 	}
 	
+	
+	
+	
+	
+	
 	@RequestMapping(value="/delete.do")
 	public String deleteBoard(BoardVO vo){ 
 		System.out.println("deleteBoard 입장");
@@ -195,8 +203,10 @@ public class BlogController {
 	}
 	
 	
+
+	//찜하기
 	@RequestMapping(value="/heart.do",method=RequestMethod.POST)
-	public @ResponseBody String heartBoard(@RequestBody MylikeVO vo){ 
+	public @ResponseBody String heart(@RequestBody MylikeVO vo){ 
 		System.out.println("heartBoard 입장");
 	
 		System.out.println("vo:"+vo);
@@ -207,16 +217,16 @@ public class BlogController {
 		}
 		else {
 			System.out.println("저장안됨");
-			return "s";
+			return "fail";
 		}
 	
 		
 	}
 	
 	
-	
+	//찜취소
 	@RequestMapping(value="/heartNo.do",method=RequestMethod.POST)
-	public @ResponseBody String heartNoBoard(@RequestBody MylikeVO vo){ 
+	public @ResponseBody String heartNo(@RequestBody MylikeVO vo){ 
 		System.out.println("heartNoBoard 입장");
 	
 		System.out.println("vo:"+vo);
@@ -229,9 +239,12 @@ public class BlogController {
 			System.out.println("삭제안됨");
 			return "s";
 		}
-	
-		
+
 	}
+	
+	
+	
+	
 	
 	@RequestMapping(value="/delheart.do")
 	public String deleteHeart(MylikeVO vo){ 

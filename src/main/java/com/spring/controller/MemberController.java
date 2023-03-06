@@ -43,7 +43,7 @@ public class MemberController {
 	     }
 		
 		vo=memberService.selectOne(vo);
-	
+	    System.out.println("vo:"+vo);
 		if(vo==null) {
 			//로그인 실패
 			System.out.println("로그: 로그인 실패");
