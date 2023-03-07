@@ -33,17 +33,19 @@
 										
 					                
 									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										
 										<li></li>
 										<!-- 커스텀 태그 이용하기 -->
 										<c:choose>
+											<c:when test="${not empty member &&(member.mid == 'admin' || member.mid == 'ADMIN')}">	
+													<li><a href="logout.do" class="icon brands fa-medium-m"><span class="label">로그아웃</span></a></li>
+													<li><a href="#" class="icon brands fa-facebook-f"><span class="label">관리자</span></a></li>
+											</c:when>	
 											<c:when test="${not empty member}">
-											
-											<li><a href="logout.do" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+												<li><a href="logout.do" class="icon brands fa-medium-m"><span class="label">로그아웃</span></a></li>
 											</c:when>
 											<c:otherwise>
-										<li><a href="login.do" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+												<li><a href="login.do" class="icon brands fa-instagram"><span class="label">로그인</span></a></li>
 										</c:otherwise>
 										</c:choose>
 									</ul>
@@ -155,7 +157,43 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 			
-			
+			<!-- 카카오 연결끊기 -->
+   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+   <script type="text/javascript">
+   
+   // SDK를 초기화 합니다. 사용할 앱 키(javascript 키) 입력합니다.
+	  window.Kakao.init('3d08dd963da5d6d0d9d5aed059ea3d21');
+   // SDK 초기화 여부를 판단합니다. true가 나온다면 정상 작동
+   console.log(Kakao.isInitialized());
+  
+   
+   function kakaologout(){
+	   
+	   location.href="logout.do";
+   }
+  
+   
+   
+   function kakaoDelete() { //탈퇴 버튼 클릭시 실행될 함수
+      if (Kakao.Auth.getAccessToken()) {
+         console.log(Kakao.Auth.getAccessToken())
+         Kakao.API.request({
+            url : '/v1/user/unlink', // --> 탈퇴시 url
+            success : function(response) {
+               console.log(response)
+               alert("카카오 연동 해제");
+              
+            },
+            fail : function(error) {
+               console.log(error)
+            },
+         })
+         Kakao.Auth.setAccessToken(undefined)
+      }
+   }
+   
+
+   </script>
 			
 			
 			
