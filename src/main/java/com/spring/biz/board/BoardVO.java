@@ -11,7 +11,6 @@ public class BoardVO {
 	private String searchCondition;
 	private String searchContent; 
 	
-	
 	private MultipartFile uploadFile;
 	private String fileName;
 
@@ -66,8 +65,10 @@ public class BoardVO {
 	@Override
 	public String toString() {
 		return "BoardVO [bid=" + bid + ", title=" + title + ", writer=" + writer + ", content=" + content
-				+ ", searchCondition=" + searchCondition + ", searchContent=" + searchContent + "]";
+				+ ", searchCondition=" + searchCondition + ", searchContent=" + searchContent + ", uploadFile="
+				+ uploadFile + ", fileName=" + fileName + "]";
 	}
+	
 	
 	
 }

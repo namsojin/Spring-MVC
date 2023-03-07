@@ -13,6 +13,8 @@ import com.spring.biz.common.JDBCUtil;
 
 //@Repository("boardDAO")
 public class BoardDAO {
+	//JDBCUtil클래스 이용
+	//conn,pstmt,rs 등을 활용한다.
 	private Connection conn;
 	private PreparedStatement pstmt;
 

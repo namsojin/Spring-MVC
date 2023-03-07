@@ -70,8 +70,18 @@
 	</aop:config>
 	 --> 
 	
- 	  
- 	  
+ 	 <!-- Mybatis 
+ 	    id가 없어도 되는 이유는 Autowired가 타입을 보고 객체를 만들어주기 떄문에
+ 	    / Factory 패턴 사용함 +dataSource 연결도 여기서 한다.
+ 	 --> 
+ 	 <!-- Mybatis -->
+   <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+      <property name="configLocation" value="classpath:sql-map-config.xml" />
+      <property name="dataSource" ref="dataSource" />
+   </bean>
+   <bean class="org.mybatis.spring.SqlSessionTemplate">
+      <constructor-arg ref="sqlSession" />
+   </bean>
  	  
  	  
 </beans>

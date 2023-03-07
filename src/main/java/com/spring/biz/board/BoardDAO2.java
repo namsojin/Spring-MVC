@@ -9,8 +9,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-@Repository("boardDAO")
+//@Repository("boardDAO")
 public class BoardDAO2 { // 스프링 JDBC를 활용하는 DAO
+	//Template 패턴을 이용
+	//jdbcTemplate 객체를 활용한다.
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -75,14 +78,6 @@ public class BoardDAO2 { // 스프링 JDBC를 활용하는 DAO
 		}
 			
 	}
-		
-		
-		
-	
-	
-	
-	
-	
 	
 	public BoardVO selectOne(BoardVO vo) {
 		Object[] args= { vo.getBid() };
