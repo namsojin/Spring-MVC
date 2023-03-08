@@ -25,7 +25,7 @@
 
 				<!-- Header -->
 				<header id="header">
-					<strong>상세 글보기</strong> 
+					<h5>상세 글보기</h5> 
 				</header>
 
 				<!-- Banner -->
@@ -55,7 +55,8 @@
 									style="width: 30px; height: 30px; cursor: pointer;" >
 							</c:otherwise>
 						</c:choose>
-
+						<!-- 공유하기 -->
+						<a href="javascript:kakaoShare()" class="icon brands fa-dribbble"><span class="label">공유하기</span></a>
 						<c:if test="${data.writer == member.mid}">
 							<ul class="actions">
 								<li><a href="update.do" class="button big">글수정하기</a></li>
@@ -198,31 +199,77 @@
 			
 		});
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	});
 	
 	</script>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-							
+	<!-- 카카오 공유하기 -->
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	<script type="text/javascript">
+		// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+		Kakao.init('3d08dd963da5d6d0d9d5aed059ea3d21');
+
+		// SDK 초기화 여부를 판단합니다.
+		console.log(Kakao.isInitialized());
+
+		function kakaoShare() {
+			Kakao.Link.sendDefault({
+				objectType : 'feed',
+				content : {
+					title : 'START TO UP',
+					description : '스타투업 사이트입니다.',
+					imageUrl : 'https://ifh.cc/g/YjnLWC.png',
+					link : {
+						mobileWebUrl : 	
+							'http://localhost:8088/app/main.do',
+						
+						webUrl : 'http://localhost:8088/app/main.do',
+					},
+				},
+				buttons : [ {
+					title : '웹으로 보기',
+					link : {
+						mobileWebUrl : 'http://localhost:8088/app/main.do',
+						webUrl : 'http://localhost:8088/app/main.do',
+					},
+				}, ],
+				// 카카오톡 미설치 시 카카오톡 설치 경로이동
+				installTalk : true,
+			})
+		kakaoDelete();
+		}
+		
+		
+		/*카카오 연결 끊기*/
+        function kakaoDelete() { //  탈퇴 버튼 클릭시 실행될 함수
+           if (Kakao.Auth.getAccessToken()) {
+              console.log(Kakao.Auth.getAccessToken())
+              Kakao.API.request({
+                 url : '/v1/user/unlink', // --> 탈퇴시 url
+                 success : function(response) {
+                    console.log(response)
+                    alert("탈퇴완료.");
+                 },
+                 fail : function(error) {
+                    console.log(error)
+                 },
+              })
+              Kakao.Auth.setAccessToken(undefined)
+           }
+        }
+        /*  회원탈퇴 end */
+
+	</script>
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>

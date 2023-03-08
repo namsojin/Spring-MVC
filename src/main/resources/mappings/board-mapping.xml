@@ -16,9 +16,7 @@
 
                              <!-- 인풋▼-->              <!--아웃풋 resultMap▼ -->
 	<select id="selectBoard" parameterType="board" resultMap="boardResultSet">
-	   
 		SELECT * FROM BOARD WHERE BID=#{bid}
-		
 	</select>
 	
 	<!-- 
@@ -48,11 +46,7 @@
       ORDER BY BID DESC
    </select>
    
-   
-   
-   
-   
-	
+
     
     <!--칼럼명과 멤버변수명이 다를 경우 맵핑해주기 위해 사용  -->
     <resultMap type="board" id="boardResultSet">
