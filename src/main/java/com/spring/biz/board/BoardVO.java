@@ -7,10 +7,10 @@ public class BoardVO {
 	private String title;
 	private String writer;
 	private String content;
-	
+	//검색
 	private String searchCondition;
 	private String searchContent; 
-	
+	//이미지업로드
 	private MultipartFile uploadFile;
 	private String fileName;
 

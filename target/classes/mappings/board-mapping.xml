@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="BoardDAO">
+	
 	<insert id="insertBoard">
 		INSERT INTO BOARD(TITLE,WRITER,CONTENT,IMAGE) VALUES(#{title},#{writer},#{content},#{fileName})
 	</insert>
@@ -13,12 +14,64 @@
       DELETE FROM BOARD WHERE BID=#{bid}
     </delete>
 
-   <select id="selectBoardList" resultType="board">
+                             <!-- 인풋▼-->              <!--아웃풋 resultMap▼ -->
+	<select id="selectBoard" parameterType="board" resultMap="boardResultSet">
+	   
+		SELECT * FROM BOARD WHERE BID=#{bid}
+		
+	</select>
+	
+	<!-- 
+	<select id="selectBoardList" resultType="board">
       SELECT * FROM BOARD
    </select>
-
-	<select id="selectBoard" resultType="board">
+   
+   <select id="selectBoard" resultType="board">
 		SELECT * FROM BOARD WHERE BID=#{bid}
 	</select>
-
+    --> 
+    
+    <!-- 검색 추가 -->
+   <select id="selectBoardList" parameterType="board" resultMap="boardResultSet">
+      SELECT *
+      FROM BOARD
+      WHERE 1=1
+      <if test="searchCondition=='TITLE'">
+         AND TITLE LIKE CONCAT('%',#{searchContent},'%')
+      </if>
+      <if test="searchCondition=='WRITER'">
+         AND WRITER LIKE CONCAT('%',#{searchContent},'%') 
+      </if>
+      <if test="searchCondition=='CONTENT'">
+         AND CONTENT LIKE CONCAT('%',#{searchContent},'%')
+      </if>      
+      ORDER BY BID DESC
+   </select>
+   
+   
+   
+   
+   
+	
+    
+    <!--칼럼명과 멤버변수명이 다를 경우 맵핑해주기 위해 사용  -->
+    <resultMap type="board" id="boardResultSet">
+    	<id property="bid" column="BID"/>
+    	<result property="title" column="TITLE"/>   
+    	<result property="writer" column="WRITER"/>   
+    	<result property="content" column="CONTENT"/> 
+    	<result property="fileName" column="IMAGE"/>  
+    </resultMap>
+    
+    <!-- xml에서 사용하는 문법(마이바티스 아니어도 상관없다) -->
+    <!-- xml에서는 부등호를 태그로 받아드린다, 이걸 막기 위함 -->
+    <!--  
+    <select id="selectBoard" parameterType="board" resultMap="boardResultSet">
+	   <![CDATA[
+		SELECT * FROM BOARD WHERE BID <=10 ORDER BY BID DESC
+		]]>
+	</select>
+    -->
+     
+    
 </mapper>
