@@ -1,15 +1,14 @@
 package com.spring.controller;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.spring.biz.member.MemberDAO;
 import com.spring.biz.member.MemberService;
 import com.spring.biz.member.MemberVO;
 
@@ -35,7 +34,7 @@ public class MemberController {
 	}
 
 	@RequestMapping(value="/login.do", method=RequestMethod.POST) 
-	public String selectOneMember(MemberVO vo,HttpSession session) {
+	public String selectOneMember(MemberVO vo,Model model,String msg,HttpSession session) {
 		System.out.println("selectOneMember 수행");
 		
 		if(vo.getMid().equals("timo")) {
@@ -47,7 +46,10 @@ public class MemberController {
 		if(vo==null) {
 			//로그인 실패
 			System.out.println("로그: 로그인 실패");
-			return "redirect:login.do";
+			
+			 msg = "아이디 또는 비밀번호를 잘못 입력하셨습니다.";
+			 model.addAttribute("msg",msg );
+			return "alert.jsp";
 		}
 		else {
 			//로그인 성공
@@ -58,6 +60,8 @@ public class MemberController {
 		}
 		
 	}
+	
+
 	
 
 	@RequestMapping(value="/logout.do") 
@@ -106,18 +110,23 @@ public class MemberController {
 	
 	
 	@RequestMapping(value="/kakaoLogin.do") 
-	public String kakaoMember(MemberVO vo,String kakao, HttpSession session) {
-		System.out.println("kakaoMember 수행");
-		System.out.println("kakao있니?"+kakao);
-		System.out.println("id:"+vo.getMid()+"/name:"+vo.getMname());
-		vo.setMpw("카카오미입력");
-		vo.setRole("MEMBER");
+	public String kakaoMember(MemberVO vo, HttpSession session) {
 		
-		if(memberService.selectOne(vo) == null) {  //처음 카카오로그인한 계정이라면, 회원가입
+		//System.out.println("로그 kakao 확인 id:"+vo.getmId()+"/mName:"+vo.getmName()+"/mEmail1:"+vo.getmEmail1);
+		
+		
+		//처음 카카오로그인한 계정이라면, 회원가입
+		if(memberService.selectOne(vo) == null) {  
+			
+			//회원가입시 필요한 칼럼들 값 적당히 넣어주기
+			//vo.setmpPw("카카오미입력");
+			//vo.setmEmail2("카카오");
+			//vo.setmNum("0000");
+			//vo.setmDate("0000");
+			
 			memberService.insertMember(vo);
 		}
 		
-		session.setAttribute("kakao", kakao);
 		session.setAttribute("member", vo);
 		return "redirect:main.do";	
 	}
