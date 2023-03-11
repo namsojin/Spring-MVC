@@ -216,49 +216,30 @@
 			Kakao.Link.sendDefault({
 				objectType : 'feed',
 				content : {
-					title : 'START TO UP',
-					description : '스타투업 사이트입니다.',
+					title : '[START TO UP]${data.title}',
+					description : '나만의 별을 펀딩하세요.',
 					imageUrl : 'https://ifh.cc/g/YjnLWC.png',
 					link : {
 						mobileWebUrl : 	
-							'http://localhost:8088/app/main.do',
+							'http://localhost:8088/app/blog.do?bid=${data.bid}',
 						
-						webUrl : 'http://localhost:8088/app/main.do',
+						webUrl : 'http://localhost:8088/app/blog.do?bid=${data.bid}',
 					},
 				},
 				buttons : [ {
-					title : '웹으로 보기',
+					title : '스타투업 가기',
 					link : {
-						mobileWebUrl : 'http://localhost:8088/app/main.do',
-						webUrl : 'http://localhost:8088/app/main.do',
+						mobileWebUrl : 'http://localhost:8088/app/blog.do?bid=${data.bid}',
+						webUrl : 'http://localhost:8088/app/blog.do?bid=${data.bid}',
 					},
 				}, ],
-				// 카카오톡 미설치 시 카카오톡 설치 경로이동
+				// 카카오톡 미설치 시 카카오톡 설치 경로이동 //  /app/main.do
 				installTalk : true,
 			})
-		kakaoDelete();
+		
 		}
 		
 		
-		/*카카오 연결 끊기*/
-        function kakaoDelete() { //  탈퇴 버튼 클릭시 실행될 함수
-           if (Kakao.Auth.getAccessToken()) {
-              console.log(Kakao.Auth.getAccessToken())
-              Kakao.API.request({
-                 url : '/v1/user/unlink', // --> 탈퇴시 url
-                 success : function(response) {
-                    console.log(response)
-                    alert("탈퇴완료.");
-                 },
-                 fail : function(error) {
-                    console.log(error)
-                 },
-              })
-              Kakao.Auth.setAccessToken(undefined)
-           }
-        }
-        /*  회원탈퇴 end */
-
 	</script>
 
 
